@@ -23,10 +23,7 @@
 ---
 
 ## Repo Structure
-root/
-|___ frontend/ # React 18 + Vite + TailwindCSS (client UI)
-|___ backend/ # Express + TypeScript + Firebase Admin SDK (REST API)
-|___ Dockerfile # Multi-stage Docker build (frontend → backend → runtime)
+<pre> \`\`\` root/ |___ frontend/ # React 18 + Vite + TailwindCSS (client UI) |___ backend/ # Express + TypeScript + Firebase Admin SDK (REST API) |___ Dockerfile # Multi-stage Docker build (frontend → backend → runtime) \`\`\` </pre>
 
 ---
 
