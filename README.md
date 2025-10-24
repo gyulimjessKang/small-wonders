@@ -10,6 +10,15 @@
 ## Live Demo  
 [View deployed version](https://small-wonders-838262699382.us-central1.run.app)
 
+<img width="1470" height="835" alt="Screenshot 2025-10-24 at 11 18 01 PM" src="https://github.com/user-attachments/assets/ed4e4889-c528-4269-8f39-e249abc6fb6d" />
+Insights page
+
+<img width="1470" height="837" alt="Screenshot 2025-10-24 at 11 19 04 PM" src="https://github.com/user-attachments/assets/e8273227-ee42-417f-a0a3-02975d95a6c0" />
+Drag functionality, demonstrating dynamic graph
+
+<img width="1469" height="837" alt="Screenshot 2025-10-24 at 11 19 59 PM" src="https://github.com/user-attachments/assets/8e8c4684-9d66-414c-909f-3f3a0cee0b78" />
+Pop-up modal example
+
 ---
 
 ## Features
