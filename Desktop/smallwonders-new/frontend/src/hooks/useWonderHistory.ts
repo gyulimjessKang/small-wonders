@@ -5,8 +5,8 @@ import { categories } from '../data/prompts';
 export interface CategoryDistribution { [cat: string]: number }
 
 export function useWonderHistory() {
-  const [distribution,setDistribution]=useState<CategoryDistribution>({});
-  const [loading,setLoading]=useState(true);
+  const [distribution, setDistribution]=useState<CategoryDistribution>({});
+  const [loading, setLoading]=useState(true);
 
   useEffect(()=>{
     const fetchData=async()=>{

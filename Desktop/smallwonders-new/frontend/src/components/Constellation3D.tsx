@@ -1,44 +1,5 @@
 import { useEffect, useRef, useState, useLayoutEffect } from 'react';
 import ForceGraph3D from 'react-force-graph-3d';
-// Starfield helper draws twinkling background on supplied canvas
-function useStarfield(canvas: HTMLCanvasElement | null) {
-  useEffect(() => {
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d')!;
-    let width = canvas.width = canvas.offsetWidth;
-    let height = canvas.height = canvas.offsetHeight;
-    const stars = Array.from({ length: 120 }, () => ({
-      x: Math.random() * width,
-      y: Math.random() * height,
-      size: Math.random() * 1.8 + 0.5,
-      speed: Math.random() * 0.3 + 0.1,
-      opacity: Math.random() * 0.6 + 0.2
-    }));
-    const resize = () => {
-      width = canvas.width = canvas.offsetWidth;
-      height = canvas.height = canvas.offsetHeight;
-    };
-    window.addEventListener('resize', resize);
-    let raf: number;
-    const loop = () => {
-      ctx.clearRect(0, 0, width, height);
-      stars.forEach(s => {
-        s.y += s.speed;
-        if (s.y > height) s.y = 0;
-        ctx.beginPath();
-        ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255,255,255,${s.opacity})`;
-        ctx.fill();
-      });
-      raf = requestAnimationFrame(loop);
-    };
-    loop();
-    return () => {
-      window.removeEventListener('resize', resize);
-      cancelAnimationFrame(raf);
-    };
-  }, [canvas]);
-}
 
 export interface GraphNode {
   id: string;
@@ -63,6 +24,7 @@ function colorByDate(date: string) {
   return pastelColors[Math.abs(hash)%pastelColors.length];
 }
 
+// Creates twinkling background for wonders
 export default function Constellation3D({ nodes, links, onSelect,onHover }: Props) {
   const ref = useRef<any>();
   const containerRef=useRef<HTMLDivElement>(null);

@@ -6,7 +6,6 @@ import statsRouter from './routes/stats';
 import settingsRouter from './routes/settings';
 import { authMiddleware } from './middleware/auth';
 import path from 'path';
-import { fileURLToPath } from 'url';
 
 const app = express();
 app.use(cors());
@@ -29,5 +28,5 @@ app.get('*', (_, res) => {
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
-  console.log(`🚀 API server listening on port ${PORT}`);
+  console.log(`API server listening on port ${PORT}`);
 }); 

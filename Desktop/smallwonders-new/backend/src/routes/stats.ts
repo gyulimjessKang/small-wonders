@@ -27,19 +27,29 @@ router.get('/', async (req, res) => {
       wonders.map((w) => w.createdAt.slice(0, 10)) // YYYY-MM-DD
     )
   ).sort();
+
+  const MS_PER_DAY = 24 * 60 * 60 * 1000
+
+  const to_dst = (ymd: string) => {
+    const [y, m, d] = ymd.split('-').map(Number)
+    return new Date(y, m - 1, d, 12, 0, 0, 0).getTime()
+  }
+
   let maxStreak = 0;
   let current = 0;
   let prevDate: string | null = null;
-  dates.forEach((d) => {
+
+  for (const d of dates) {
     if (!prevDate) {
       current = 1;
-    } else {
-      const diff = (new Date(d).getTime() - new Date(prevDate).getTime()) / (1000 * 60 * 60 * 24);
-      current = diff === 1 ? current + 1 : 1;
     }
-    if (current > maxStreak) maxStreak = current;
+    else {
+      const isNextDay = to_dst(d) - to_dst(prevDate) === MS_PER_DAY
+      current = isNextDay ? current + 1 : 1;
+    }
+    maxStreak = Math.max(maxStreak, current);
     prevDate = d;
-  });
+  }
 
   res.json({ total, streak: maxStreak, topCategory });
 });

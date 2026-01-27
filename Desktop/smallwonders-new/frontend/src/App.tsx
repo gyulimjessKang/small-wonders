@@ -1,14 +1,13 @@
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import LandingPage from './pages/LandingPage';
 import LogWonderPage from './pages/LogWonderPage';
 import InsightsPage from './pages/InsightsPage';
 import Navbar from './components/Navbar';
 import { useEffect, useState } from 'react';
-import { signInWithPopup, onAuthStateChanged, signOut } from 'firebase/auth';
+import { signInWithPopup, onAuthStateChanged } from 'firebase/auth';
 import { auth, googleProvider } from './firebase';
 import ConfirmationPage from './pages/ConfirmationPage';
 import SettingsPage from './pages/SettingsPage';
-import StarfieldCanvas from './components/StarfieldCanvas';
 
 export default function App() {
   const [user, setUser] = useState<any>(null);

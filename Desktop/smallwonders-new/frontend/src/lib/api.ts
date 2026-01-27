@@ -10,14 +10,14 @@ export async function apiFetch(path: string, options: RequestInit = {}) {
   const user = auth.currentUser;
   let token = localStorage.getItem('token') || undefined;
   if (user) {
-    // Use cached token; only force refresh when a 401 occurs later
     token = await user.getIdToken();
     localStorage.setItem('token', token);
   }
   const headers = {
     ...(options.headers || {}),
     ...(token ? { Authorization: `Bearer ${token}` } : {})
-  } as any;
+  };
+  // Make HTTP request
   const res = await fetch(apiUrl(path), { ...options, headers });
   if (res.status === 401) {
     // token maybe expired, try once more
