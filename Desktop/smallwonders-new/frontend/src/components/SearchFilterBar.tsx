@@ -4,9 +4,9 @@ interface Props {
   onCategoryChange: (c: string) => void;
   search: string;
   onSearchChange: (s: string) => void;
-  onClear: ()=>void;
-  visible:number;
-  total:number;
+  onClear: () => void;
+  visible: number;
+  total: number;
 }
 
 export default function SearchFilterBar({

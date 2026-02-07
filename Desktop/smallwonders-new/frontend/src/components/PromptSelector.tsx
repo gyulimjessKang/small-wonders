@@ -17,7 +17,7 @@ const PromptSelector: React.FC<PromptSelectorProps> = ({ onPromptSelect, isFreeW
       return prompts[Math.floor(Math.random() * prompts.length)];
     }
     const under = getUnderrepresentedCategories();
-    const most = getMostFrequentCategories(2);
+    const most = getMostFrequentCategories(3);
     let targetCats: string[] = [];
     if (under.length) {
       targetCats = under;

@@ -47,9 +47,6 @@ export default function LogWonderPage() {
       {isFreeWrite && (
         <div className="bg-white/10 p-4 rounded flex items-center justify-between">
           <span className="opacity-70">Free Write mode</span>
-          {/* <button onClick={() => setIsFreeWrite(false)} className="underline text-sm">
-            Show Prompt
-          </button> */}
         </div>
       )}
 

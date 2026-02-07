@@ -1,54 +1,42 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { auth } from '../firebase';
 import { apiFetch } from '../lib/api';
 
 interface UserSettings {
   userId: string;
   preferredName: string;
-  reminderEnabled: boolean;
-  reminderTime: string; // e.g., '09:00'
 }
 
 export default function SettingsPage() {
-  const navigate = useNavigate();
-  const defaultSettings:UserSettings={
-    userId: auth.currentUser?.uid||'',
-    preferredName:'',
-    reminderEnabled:false,
-    reminderTime:'09:00'
+  const defaultSettings: UserSettings = {
+    userId: auth.currentUser?.uid || '',
+    preferredName: ''
   };
 
-  const [settings,setSettings]=useState<UserSettings>(defaultSettings);
-  const [preferredNameInput,setPreferredNameInput]=useState('');
+  const [settings, setSettings] = useState<UserSettings>(defaultSettings);
+  const [preferredNameInput, setPreferredNameInput] = useState('');
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
-
-  // Generate time options from 7 AM to 10 PM
-  const timeOptions = Array.from({ length: 16 }, (_, i) => {
-    const hour = i + 7;
-    const period = hour >= 12 ? 'PM' : 'AM';
-    const displayHour = hour > 12 ? hour - 12 : hour;
-    return `${displayHour}:00 ${period}`;
-  });
 
   useEffect(() => {
     async function load() {
       const headers = { Authorization: `Bearer ${localStorage.getItem('token')}` } as any;
       const data = await apiFetch('/api/settings', { headers }).then((r) => r.json());
-      setSettings({...defaultSettings,...data});
+      setSettings({...defaultSettings, ...data});
       setLoading(false);
     }
     load();
   }, []);
 
-  const handleSaveInternal=async(updatedSettings:UserSettings,showMessage=true)=>{
+  const handleSaveInternal = async(updatedSettings: UserSettings, showMessage=true) => {
     setSaving(true);
-    const headers={Authorization:`Bearer ${localStorage.getItem('token')}`,'Content-Type':'application/json'} as any;
+    const headers = {Authorization:`Bearer ${localStorage.getItem('token')}`,
+                    'Content-Type':'application/json'
+                    } as any;
     try {
-      await apiFetch('/api/settings',{method:'PUT',headers,body:JSON.stringify(updatedSettings)});
-      if(showMessage){
+      await apiFetch('/api/settings',{method:'PUT', headers, body: JSON.stringify(updatedSettings)});
+      if (showMessage){
         setMessage({ type: 'success', text: 'Settings saved successfully!' });
         setTimeout(() => setMessage(null), 3000);
       }
@@ -61,7 +49,7 @@ export default function SettingsPage() {
   };
 
   const handleSave = async () => {
-    await handleSaveInternal({...settings,preferredName:preferredNameInput});
+    await handleSaveInternal({...settings, preferredName: preferredNameInput});
   };
 
   if (loading) return <p className="p-6">Loading…</p>;
@@ -94,7 +82,6 @@ export default function SettingsPage() {
             className="w-full px-3 py-2 rounded bg-white/10"
           />
         </div>
-        {/* Daily reminder UI temporarily disabled */}
         <button
           onClick={handleSave}
           className="px-6 py-3 bg-purple-600 rounded hover:bg-purple-700"

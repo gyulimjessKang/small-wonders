@@ -1,7 +1,7 @@
 import { useMemo, useState, useEffect } from 'react';
 import StatsBar from '../components/StatsBar';
 import SearchFilterBar from '../components/SearchFilterBar';
-import Constellation3D,{GraphNode,GraphLink} from '../components/Constellation3D';
+import Constellation3D, {GraphNode, GraphLink} from '../components/Constellation3D';
 import WonderPopup from '../components/WonderPopup';
 import { apiFetch } from '../lib/api';
 import { getAllCategories } from '../data/prompts';
@@ -9,8 +9,8 @@ import { getAllCategories } from '../data/prompts';
 interface Wonder {
   id: string;
   text: string;
-  category: string;
   createdAt: string;
+  category?: string;
 }
 
 export default function InsightsPage() {
@@ -54,21 +54,28 @@ export default function InsightsPage() {
   );
 
   // build nodes & links for graph
-  const nodes:GraphNode[]=useMemo(()=>filtered.map(w=>({id:w.id,name:w.text,date:w.createdAt.slice(0,10),category:w.category})),[filtered]);
-  const links:GraphLink[]=useMemo(()=>{
-    const byDay:Record<string,string[]>={};
-    filtered.forEach(w=>{
-      const d=w.createdAt.slice(0,10);
-      (byDay[d]=byDay[d]||[]).push(w.id);
+  const nodes: GraphNode[] = useMemo(() => filtered.map(
+    w => ({id: w.id,
+           name: w.text,
+           date: w.createdAt.slice(0,10),
+           category: w.category}
+          )), [filtered]);
+
+  const links: GraphLink[] = useMemo(() => {
+    const byDay: Record<string,string[]> = {};
+    filtered.forEach(w => {
+      const d = w.createdAt.slice(0,10);
+      (byDay[d] = byDay[d] || []).push(w.id);
     });
-    const res:GraphLink[]=[];
-    Object.values(byDay).forEach(ids=>{
-      for(let i=0;i<ids.length-1;i++) res.push({source:ids[i],target:ids[i+1]});
+    
+    const res: GraphLink[] = [];
+    Object.values(byDay).forEach(ids => {
+      for(let i = 0; i < ids.length - 1; i++) res.push({source: ids[i], target: ids[i + 1]});
     });
     return res;
-  },[filtered]);
+  }, [filtered]);
 
-  const clearFilters=()=>{setCategory('');setSearch('');};
+  const clearFilters = () => {setCategory(''); setSearch('');};
 
   return (
     <div className="p-6 space-y-6 animate-fade-in">
@@ -86,25 +93,25 @@ export default function InsightsPage() {
       {hovered && (
         <div className="absolute left-2 top-20 bg-black/80 text-white text-sm p-2 rounded max-w-xs pointer-events-none">
           <p className="font-semibold mb-1">{new Date(hovered.createdAt).toLocaleDateString()}</p>
-          {hovered.text.slice(0,60)}{hovered.text.length>60?'…':''}
+          {hovered.text.slice(0, 60)}{hovered.text.length > 60?'…':''}
         </div>
       )}
-      {wonders.length>=5 && (
-        nodes.length>0 ? (
+      {wonders.length >= 5 && (
+        nodes.length > 0 ? (
           <Constellation3D
             nodes={nodes}
             links={links}
-            onSelect={(n)=>{const w=wonders.find(w=>w.id===n.id);if(w) setSelected(w);}}
-            onHover={(n)=>{const w=wonders.find(w=>w.id===n?.id);setHovered(w||null);}}
+            onSelect={(n) => {const w = wonders.find(w => w.id === n.id); if (w) setSelected(w);}}
+            onHover={(n) => {const w = wonders.find(w => w.id === n?.id); setHovered(w || null);}}
           />
         ) : (
           <div className="text-center text-white/70">No wonders match current filters.</div>
         )
       )}
-      {wonders.length<5 && (
+      {wonders.length < 5 && (
         <div className="text-center text-white">Log 5 wonders to unlock your constellation!</div>
       )}
-      {selected && <WonderPopup wonder={selected} onClose={()=>setSelected(null)} />}
+      {selected && <WonderPopup wonder={selected} onClose={() => setSelected(null)} />}
     </div>
   );
 } 

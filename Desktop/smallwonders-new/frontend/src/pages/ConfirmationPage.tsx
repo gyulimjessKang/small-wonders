@@ -5,18 +5,18 @@ import { apiFetch } from '../lib/api';
 
 export default function ConfirmationPage() {
   const navigate = useNavigate();
-  const [preferredName,setPreferredName]=useState<string>('');
+  const [preferredName, setPreferredName] = useState<string>('');
 
-  useEffect(()=>{
+  useEffect(() => {
     async function load(){
-      const res=await apiFetch('/api/settings');
+      const res = await apiFetch('/api/settings');
       if(res.ok){
-        const data=await res.json();
-        if(data.preferredName) setPreferredName(data.preferredName);
+        const data = await res.json();
+        if (data.preferredName) setPreferredName(data.preferredName);
       }
     }
     load();
-  },[]);
+  }, []);
 
   const name = preferredName || auth.currentUser?.displayName || 'Friend';
   return (
