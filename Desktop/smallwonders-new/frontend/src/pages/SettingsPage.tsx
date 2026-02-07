@@ -1,24 +1,20 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../firebase';
-import { useTheme, Theme } from '../hooks/useTheme';
 import { apiFetch } from '../lib/api';
 
 interface UserSettings {
   userId: string;
   preferredName: string;
-  theme: Theme;
   reminderEnabled: boolean;
   reminderTime: string; // e.g., '09:00'
 }
 
 export default function SettingsPage() {
   const navigate = useNavigate();
-  const [theme, setTheme] = useTheme();
   const defaultSettings:UserSettings={
     userId: auth.currentUser?.uid||'',
     preferredName:'',
-    theme:'light',
     reminderEnabled:false,
     reminderTime:'09:00'
   };
@@ -42,18 +38,16 @@ export default function SettingsPage() {
       const headers = { Authorization: `Bearer ${localStorage.getItem('token')}` } as any;
       const data = await apiFetch('/api/settings', { headers }).then((r) => r.json());
       setSettings({...defaultSettings,...data});
-      if (data.theme) setTheme(data.theme as Theme);
       setLoading(false);
     }
     load();
-  }, [setTheme]);
+  }, []);
 
   const handleSaveInternal=async(updatedSettings:UserSettings,showMessage=true)=>{
     setSaving(true);
     const headers={Authorization:`Bearer ${localStorage.getItem('token')}`,'Content-Type':'application/json'} as any;
     try {
       await apiFetch('/api/settings',{method:'PUT',headers,body:JSON.stringify(updatedSettings)});
-      setTheme(updatedSettings.theme);
       if(showMessage){
         setMessage({ type: 'success', text: 'Settings saved successfully!' });
         setTimeout(() => setMessage(null), 3000);
@@ -92,17 +86,6 @@ export default function SettingsPage() {
         </div>
       )}
       <div className="space-y-4">
-        <div>
-          <label className="block mb-1">Theme</label>
-          <select
-            value={settings.theme}
-            onChange={(e)=>setSettings({...settings,theme:e.target.value as Theme})}
-            className="px-3 py-2 rounded bg-white/10"
-          >
-            <option value="light">Light</option>
-            <option value="dark">Dark</option>
-          </select>
-        </div>
         <div>
           <label className="block mb-1">Preferred name</label>
           <input

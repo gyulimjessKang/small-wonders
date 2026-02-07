@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { apiFetch } from '../lib/api';
 import { Prompt } from '../data/prompts';
@@ -9,7 +9,6 @@ export default function LogWonderPage() {
   const [prompt, setPrompt] = useState<Prompt | null>(null);
   const [text, setText] = useState('');
   const [isFreeWrite, setIsFreeWrite] = useState(false);
-  // no refresh limit now
 
   // prompt provided by PromptSelector
 
@@ -48,9 +47,9 @@ export default function LogWonderPage() {
       {isFreeWrite && (
         <div className="bg-white/10 p-4 rounded flex items-center justify-between">
           <span className="opacity-70">Free Write mode</span>
-          <button onClick={() => setIsFreeWrite(false)} className="underline text-sm">
+          {/* <button onClick={() => setIsFreeWrite(false)} className="underline text-sm">
             Show Prompt
-          </button>
+          </button> */}
         </div>
       )}
 

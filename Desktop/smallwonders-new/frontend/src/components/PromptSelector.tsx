@@ -38,7 +38,6 @@ const PromptSelector: React.FC<PromptSelectorProps> = ({ onPromptSelect, isFreeW
       setCurrentPrompt(null);
       onPromptSelect(null);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [categoryDistribution, loading, isFreeWrite]);
 
   const handleNewPrompt = () => {
