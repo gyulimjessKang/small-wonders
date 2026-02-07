@@ -8,7 +8,7 @@
 ---
 
 ## Live Demo  
-[View deployed version](https://small-wonders-838262699382.us-central1.run.app)
+View deployed web app: [https://small-wonders-sooty.vercel.app](https://small-wonders-sooty.vercel.app)
 
 <img width="1470" height="835" alt="Screenshot 2025-10-24 at 11 18 01 PM" src="https://github.com/user-attachments/assets/ed4e4889-c528-4269-8f39-e249abc6fb6d" />
 Insights page
