@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>IG Post Curator</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="app-header">
+    <h1>IG Post Curator</h1>
+    <p class="subtitle">Drop in your photo pool. It suggests how many to post and in what order &mdash; everything runs locally in your browser, nothing is uploaded anywhere.</p>
+  </header>
+
+  <main>
+    <section id="dropzone" class="dropzone">
+      <input type="file" id="file-input" accept="image/*" multiple hidden />
+      <div class="dropzone-content">
+        <strong>Drop photos here</strong> or <button id="browse-btn" type="button">browse files</button>
+        <span class="hint">JPG / PNG / WEBP &middot; any number of photos</span>
+      </div>
+    </section>
+
+    <div id="progress" class="progress" hidden>
+      <div class="progress-bar"><div id="progress-fill" class="progress-fill"></div></div>
+      <span id="progress-label"></span>
+    </div>
+
+    <section id="controls" class="controls" hidden>
+      <div class="control">
+        <label for="count-slider">Photos to post: <strong id="count-value"></strong></label>
+        <input type="range" id="count-slider" min="1" max="10" value="1" />
+        <span id="suggestion-note" class="suggestion-note"></span>
+      </div>
+      <div class="control">
+        <label for="mode-select">Order by</label>
+        <select id="mode-select">
+          <option value="flow">Best shot first, then visual flow (recommended)</option>
+          <option value="upload">Order you added them in</option>
+        </select>
+      </div>
+      <button id="reset-btn" type="button" class="ghost-btn">Reset to suggestion</button>
+      <button id="clear-btn" type="button" class="ghost-btn">Start over</button>
+    </section>
+
+    <section id="selection-section" class="selection-section" hidden>
+      <h2>Your post <span id="selection-count" class="pill"></span></h2>
+      <p class="hint">Drag thumbnails to fine-tune the order. Click a photo below to add or remove it.</p>
+      <div id="selection-strip" class="selection-strip"></div>
+      <button id="download-btn" type="button" class="primary-btn">Download selection as ZIP (numbered in order)</button>
+    </section>
+
+    <section id="pool-section" class="pool-section" hidden>
+      <h2>All photos <span class="hint">&mdash; similar shots are grouped together</span></h2>
+      <div id="pool-grid" class="pool-grid"></div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
